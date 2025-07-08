@@ -2,7 +2,7 @@
 
 import {useState, useEffect} from "react";
 import axios from "axios";
-import {APP_API} from "../api/AppAPI.js";
+import {APP_API} from "../api/AppApi.js";
 import {BASE_URL} from "../api/BaseUrl.js";
 import {Loading} from "../connection/Loading.jsx";
 import {Image} from "lucide-react";

@@ -3,7 +3,7 @@ import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
 import {Eye, EyeOff} from 'lucide-react';
 import {BASE_URL} from "../api/BaseUrl.js";
-import {APP_API} from "../api/AppAPI.js";
+import {APP_API} from "../api/AppApi.js";
 
 export default function Login() {
     const [phone, setPhone] = useState('');

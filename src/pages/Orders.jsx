@@ -1,9 +1,9 @@
 import {useEffect, useState} from 'react';
 import axios from 'axios';
 import {BASE_URL} from '../api/BaseUrl';
-import {APP_API} from '../api/AppApi';
 import {Loading} from "../connection/Loading.jsx";
 import toast from 'react-hot-toast';
+import {APP_API} from "../api/AppApi.js";
 
 export const Orders = () => {
     const [orders, setOrders] = useState([]);
@@ -18,7 +18,7 @@ export const Orders = () => {
             setOrders(res.data.orders);
             setTotalPages(res.data.totalPages);
             setCurrentPage(res.data.currentPage);
-        } catch (err) {
+        } catch {
             toast.error("Buyurtmalarni olishda xatolik");
         } finally {
             setLoading(false);
@@ -39,7 +39,7 @@ export const Orders = () => {
             await axios.put(`${BASE_URL}${APP_API.order}/updateStatus/${orderId}`, body);
             toast.success("Holat yangilandi");
             getOrders(currentPage); // listni yangilash
-        } catch (err) {
+        } catch {
             toast.error("Holatni yangilashda xatolik");
         }
     };

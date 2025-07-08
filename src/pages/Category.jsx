@@ -3,7 +3,7 @@
 import {useState, useEffect} from 'react';
 import axios from 'axios';
 import {BASE_URL} from "../api/BaseUrl.js";
-import {APP_API} from "../api/AppAPI.js";
+import {APP_API} from "../api/AppApi.js";
 import {Loading} from "../connection/Loading.jsx";
 
 export const Category = () => {
