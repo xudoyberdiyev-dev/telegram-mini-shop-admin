@@ -19,7 +19,7 @@ export default function App() {
                         <Layout/>
                     </PrivateRoute>
                 }>
-                    <Route index element={<Dashboard/>}/>
+                    <Route index element={<Profile/>}/>
 
                     <Route path="category" element={<Category/>}/>
                     <Route path="products" element={<Products/>}/>

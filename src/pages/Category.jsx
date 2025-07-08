@@ -4,6 +4,7 @@ import {useState, useEffect} from 'react';
 import axios from 'axios';
 import {BASE_URL} from "../api/BaseUrl.js";
 import {APP_API} from "../api/AppAPI.js";
+import {Loading} from "../connection/Loading.jsx";
 
 export const Category = () => {
     const [categories, setCategories] = useState([]);
@@ -13,13 +14,17 @@ export const Category = () => {
     const [editMode, setEditMode] = useState(false);
     const [editId, setEditId] = useState(null);
     const [previewImage, setPreviewImage] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     const getCategory = async () => {
         try {
+            setLoading(true);
             const res = await axios.get(`${BASE_URL}${APP_API.category}`);
             setCategories(res.data);
         } catch (err) {
             console.log(err);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -94,6 +99,9 @@ export const Category = () => {
     useEffect(() => {
         getCategory();
     }, []);
+    if (loading) {
+        return <Loading/>;
+    }
 
 
     return (

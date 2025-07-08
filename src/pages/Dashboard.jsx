@@ -3,17 +3,7 @@ import { useEffect } from 'react';
 import Sidebar from "../components/Sidebar.jsx";
 
 export default function Dashboard() {
-    const navigate = useNavigate();
 
-    const handleLogout = () => {
-        sessionStorage.clear();
-        navigate('/');
-    };
-
-    useEffect(() => {
-        const token = sessionStorage.getItem('token');
-        if (!token) navigate('/');
-    }, []);
 
     return (
         <div className="p-6">
