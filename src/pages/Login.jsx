@@ -10,17 +10,20 @@ export default function Login() {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleLogin = async () => {
         const data = {phone, password};
+        setIsLoading(true);
         try {
             const res = await axios.post(`${BASE_URL}${APP_API.login}`, data);
-
             sessionStorage.setItem('token', res.data.token);
             sessionStorage.setItem('admin', JSON.stringify(res.data.admin));
             navigate('/dashboard');
-        } catch (err) {
+        } catch {
             alert("login yoki parol xato");
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -64,9 +67,12 @@ export default function Login() {
 
                 <button
                     onClick={handleLogin}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white p-2 rounded shadow font-semibold transition"
+                    disabled={isLoading}
+                    className={`w-full p-2 rounded shadow font-semibold transition 
+                ${isLoading ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 text-white'}
+            `}
                 >
-                    Kirish
+                    {isLoading ? 'Yuklanmoqda...' : 'Kirish'}
                 </button>
             </div>
         </div>

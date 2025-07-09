@@ -5,6 +5,7 @@ import {Eye, EyeOff} from "lucide-react";
 import {BASE_URL} from "../api/BaseUrl.js";
 import {APP_API} from "../api/AppApi.js";
 import {useNavigate} from "react-router-dom";
+import {Loading} from "../connection/Loading.jsx";
 
 export const Profile = () => {
     const token = sessionStorage.getItem("token");
@@ -83,7 +84,6 @@ export const Profile = () => {
             });
             toast.success("Ma'lumotlar yangilandi");
 
-            // So‘rovdan keyin qayta yangilash
             const res = await axios.get(`${BASE_URL}${APP_API.profile}`, {
                 headers: {Authorization: `Bearer ${token}`}
             });
@@ -101,7 +101,7 @@ export const Profile = () => {
         }
     };
 
-    if (loading) return <p>Yuklanmoqda...</p>;
+    if (loading) return <Loading/>;
 
     return (
         <div className="max-w-xl mx-auto mt-10 p-4 bg-white rounded-lg shadow">
