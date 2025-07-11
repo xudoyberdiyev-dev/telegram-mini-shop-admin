@@ -88,7 +88,6 @@ export const Orders = () => {
                                         <option value="QABUL QILINDI">QABUL QILINDI</option>
                                         <option value="QADOQLANMOQDA">QADOQLANMOQDA</option>
                                         <option value="YETKAZILMOQDA">YETKAZILMOQDA</option>
-                                        <option value="YETIB KELDI">YETIB KELDI</option>
                                         <option value="HARIDOR QABUL QILDI">HARIDOR QABUL QILDI</option>
                                         <option value="BEKOR QILINDI">BEKOR QILINDI</option>
                                     </select>
