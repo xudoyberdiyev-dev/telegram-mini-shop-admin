@@ -5,6 +5,7 @@ import axios from 'axios';
 import {BASE_URL} from "../api/BaseUrl.js";
 import {APP_API} from "../api/AppApi.js";
 import {Loading} from "../connection/Loading.jsx";
+import {toast} from "react-hot-toast";
 
 export const Category = () => {
     const [categories, setCategories] = useState([]);
@@ -90,8 +91,19 @@ export const Category = () => {
 
     const handleFileChange = (e) => {
         if (e.target.files && e.target.files[0]) {
-            setImage(e.target.files[0]);
-            const url = URL.createObjectURL(e.target.files[0]);
+            const file = e.target.files[0];
+            const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+
+            if (!allowedTypes.includes(file.type)) {
+                alert("❌ Faqat .jpg, .jpeg, .png va .webp formatdagi rasmlar yuklanadi.");
+                e.target.value = null;
+                setImage(null);
+                setPreviewImage(null);
+                return;
+            }
+
+            setImage(file);
+            const url = URL.createObjectURL(file);
             setPreviewImage(url);
         }
     };
@@ -131,14 +143,18 @@ export const Category = () => {
                         )}
 
                         <div className="mb-3">
-                            <label className="block mb-1 text-sm font-medium text-gray-700">Rasm</label>
+                            <label className="block mb-1 text-sm font-medium text-gray-700">
+                                Rasm (faqat .jpg, .jpeg, .png, .webp formatlar qabul qilinadi)
+                            </label>
                             <input
                                 type="file"
-                                accept="image/*"
+                                accept=".jpg,.jpeg,.png,.webp"
                                 onChange={handleFileChange}
                                 className="w-full border border-gray-300 p-2 rounded"
                             />
                         </div>
+
+
 
                         <div className="mb-4">
                             <label className="block mb-1 text-sm font-medium text-gray-700">Kategoriya nomi</label>

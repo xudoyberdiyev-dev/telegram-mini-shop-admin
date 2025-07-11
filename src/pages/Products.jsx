@@ -228,8 +228,9 @@ export const Products = () => {
                                 </h2>
                                 <form onSubmit={saveProduct}>
                                     <div className="mb-3">
-                                        <label className="block mb-1 font-medium text-sm text-gray-700">Rasm
-                                            yuklang</label>
+                                        <label className="block mb-1 text-sm font-medium text-gray-700">
+                                            Rasm (faqat .jpg, .jpeg, .png, .webp formatlar qabul qilinadi)
+                                        </label>
                                         <input
                                             type="file"
                                             accept="image/*"
