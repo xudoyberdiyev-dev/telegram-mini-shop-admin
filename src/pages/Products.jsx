@@ -47,12 +47,21 @@ export const Products = () => {
 
     const handleInputChange = (e) => {
         const target = e.target;
-        const {name, value} = target;
+        const {name, value, type, files} = target;
 
-        if (target.type === 'file' && target.files) {
+        if (type === 'file' && files) {
+            const file = files[0];
+            const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+
+            if (!allowedTypes.includes(file.type)) {
+                alert("❌ Farmat to'g'ri kelmadi .jpg, .jpeg, .png va .webp formatdagi rasmlar yuklanadi.");
+                target.value = null;
+                return;
+            }
+
             setFormData({
                 ...formData,
-                [name]: target.files[0]
+                [name]: file
             });
         } else {
             setFormData({
@@ -61,6 +70,7 @@ export const Products = () => {
             });
         }
     };
+
 
     const saveProduct = async (e) => {
         e.preventDefault();
@@ -233,7 +243,7 @@ export const Products = () => {
                                         </label>
                                         <input
                                             type="file"
-                                            accept="image/*"
+                                            accept=".jpg,.jpeg,.png,.webp"
                                             name="image"
                                             onChange={handleInputChange}
                                             className="w-full border border-gray-300 rounded-lg p-2"

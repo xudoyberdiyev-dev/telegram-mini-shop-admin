@@ -95,7 +95,7 @@ export const Category = () => {
             const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
             if (!allowedTypes.includes(file.type)) {
-                alert("❌ Faqat .jpg, .jpeg, .png va .webp formatdagi rasmlar yuklanadi.");
+                alert("❌ Farmat to'g'ri kelmadi .jpg, .jpeg, .png va .webp formatdagi rasmlar yuklanadi.");
                 e.target.value = null;
                 setImage(null);
                 setPreviewImage(null);
