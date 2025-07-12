@@ -152,6 +152,7 @@ export const Category = () => {
                             </label>
                             <input
                                 type="file"
+                                name={'image'}
                                 accept=".jpg,.jpeg,.png,.webp"
                                 onChange={handleFileChange}
                                 className="w-full border border-gray-300 p-2 rounded"
@@ -162,6 +163,7 @@ export const Category = () => {
                             <label className="block mb-1 text-sm font-medium text-gray-700">Kategoriya nomi</label>
                             <input
                                 type="text"
+                                name={'name'}
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                                 className="w-full border border-gray-300 p-2 rounded"
