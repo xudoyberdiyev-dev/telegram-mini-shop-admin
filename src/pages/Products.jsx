@@ -15,6 +15,8 @@ export const Products = () => {
     const [totalPages, setTotalPages] = useState(1);
     const [editingProductId, setEditingProductId] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
+
 
     const [formData, setFormData] = useState({
         name: '',
@@ -74,6 +76,8 @@ export const Products = () => {
 
     const saveProduct = async (e) => {
         e.preventDefault();
+        setIsLoading(true); // 👈 boshlanishi
+
         try {
             const data = new FormData();
             data.append('name', formData.name);
@@ -104,6 +108,8 @@ export const Products = () => {
             } else {
                 console.error("Nomaʼlum xatolik:", err);
             }
+        } finally {
+            setIsLoading(false); // 👈 tugashi
         }
     };
 
@@ -311,10 +317,14 @@ export const Products = () => {
                                         </button>
                                         <button
                                             type="submit"
-                                            className="px-4 py-2 bg-yellow-700 text-white rounded hover:bg-yellow-600"
+                                            disabled={isLoading}
+                                            className="px-4 py-2 bg-yellow-700 text-white rounded hover:bg-yellow-600 disabled:opacity-50"
                                         >
-                                            Saqlash
+                                            {isLoading
+                                                ? (editingProductId ? "Tahrirlanmoqda..." : "Saqlanmoqda...")
+                                                : (editingProductId ? "Tahrirlash" : "Saqlash")}
                                         </button>
+
                                     </div>
                                 </form>
                             </div>

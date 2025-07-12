@@ -5,7 +5,6 @@ import axios from 'axios';
 import {BASE_URL} from "../api/BaseUrl.js";
 import {APP_API} from "../api/AppApi.js";
 import {Loading} from "../connection/Loading.jsx";
-import {toast} from "react-hot-toast";
 
 export const Category = () => {
     const [categories, setCategories] = useState([]);
@@ -16,6 +15,7 @@ export const Category = () => {
     const [editId, setEditId] = useState(null);
     const [previewImage, setPreviewImage] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     const getCategory = async () => {
         try {
@@ -35,6 +35,8 @@ export const Category = () => {
             return;
         }
 
+        setIsLoading(true);
+
         const formData = new FormData();
         formData.append("name", name);
         if (image) formData.append("file", image);
@@ -46,6 +48,7 @@ export const Category = () => {
                 await axios.post(`${BASE_URL}${APP_API.category}`, formData);
             }
 
+            // Tozalash
             setName('');
             setImage(null);
             setEditMode(false);
@@ -54,15 +57,17 @@ export const Category = () => {
             setShowForm(false);
             getCategory();
         } catch (err) {
-            const msg = axios.isAxiosError(err) ? err.response?.data?.msg : 'Xatolik yuz berdi';
-            alert(msg);
+            axios.isAxiosError(err) ? err.response?.data?.msg : 'Nomaʼlum xatolik yuz berdi';
+            alert("Xatolik yuz berdi. Iltimos, barcha maydonlarni to‘ldiring va qaytadan urinib ko‘ring.");
+        } finally {
+            setIsLoading(false);
         }
     };
+
 
     const deleteCategory = async (id) => {
         const confirmDelete = window.confirm("Rostdan ham o‘chirmoqchimisiz?");
         if (!confirmDelete) return;
-
         try {
             await axios.delete(`${BASE_URL}${APP_API.category}/${id}`);
             getCategory();
@@ -101,7 +106,6 @@ export const Category = () => {
                 setPreviewImage(null);
                 return;
             }
-
             setImage(file);
             const url = URL.createObjectURL(file);
             setPreviewImage(url);
@@ -154,8 +158,6 @@ export const Category = () => {
                             />
                         </div>
 
-
-
                         <div className="mb-4">
                             <label className="block mb-1 text-sm font-medium text-gray-700">Kategoriya nomi</label>
                             <input
@@ -182,10 +184,14 @@ export const Category = () => {
                             </button>
                             <button
                                 onClick={saveCategory}
-                                className="bg-yellow-700 text-white px-4 py-2 rounded hover:bg-yellow-600"
+                                className="w-700 text-white bg-yellow-600 px-4 py-2 rounded  hover:bg-yellow-700 disabled:opacity-50"
+                                disabled={isLoading}
                             >
-                                Saqlash
+                                {isLoading
+                                    ? (editMode ? "Tahrirlanmoqda..." : "Saqlanmoqda...")
+                                    : (editMode ? "Tahrirlash" : "Saqlash")}
                             </button>
+
                         </div>
                     </div>
                 </div>
