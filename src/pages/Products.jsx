@@ -49,14 +49,23 @@ export const Products = () => {
 
     const handleInputChange = (e) => {
         const target = e.target;
-        const {name, value, type, files} = target;
+        const { name, value, type, files } = target;
 
         if (type === 'file' && files) {
             const file = files[0];
             const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
             if (!allowedTypes.includes(file.type)) {
-                alert("❌ Farmat to'g'ri kelmadi .jpg, .jpeg, .png va .webp formatdagi rasmlar yuklanadi.");
+                alert("Format noto‘g‘ri! Faqat .jpg, .jpeg, .png va .webp fayllar yuklanadi.");
+                target.value = null;
+                return;
+            }
+
+            const maxSizeInMB = 5;
+            const maxSizeInBytes = maxSizeInMB * 1024 * 1024;
+
+            if (file.size > maxSizeInBytes) {
+                alert(`Fayl hajmi ${maxSizeInMB}MB dan oshmasligi kerak!`);
                 target.value = null;
                 return;
             }

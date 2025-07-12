@@ -48,7 +48,6 @@ export const Category = () => {
                 await axios.post(`${BASE_URL}${APP_API.category}`, formData);
             }
 
-            // Tozalash
             setName('');
             setImage(null);
             setEditMode(false);
@@ -58,7 +57,7 @@ export const Category = () => {
             getCategory();
         } catch (err) {
             axios.isAxiosError(err) ? err.response?.data?.msg : 'Nomaʼlum xatolik yuz berdi';
-            alert("Xatolik yuz berdi. Iltimos, barcha maydonlarni to‘ldiring va qaytadan urinib ko‘ring.");
+            alert("Iltimos barcha malumotlarga etibor bering");
         } finally {
             setIsLoading(false);
         }
@@ -100,17 +99,31 @@ export const Category = () => {
             const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
             if (!allowedTypes.includes(file.type)) {
-                alert("❌ Farmat to'g'ri kelmadi .jpg, .jpeg, .png va .webp formatdagi rasmlar yuklanadi.");
+                alert("Format noto‘g‘ri! Faqat .jpg, .jpeg, .png va .webp fayllar yuklanadi.");
                 e.target.value = null;
                 setImage(null);
                 setPreviewImage(null);
                 return;
             }
+
+            const maxSizeInMB = 5;
+            const maxSizeInBytes = maxSizeInMB * 1024 * 1024;
+
+            if (file.size > maxSizeInBytes) {
+                alert(`Rasm hajmi ${maxSizeInMB}MB dan oshmasligi kerak!`);
+                e.target.value = null;
+                setImage(null);
+                setPreviewImage(null);
+                return;
+            }
+
+            // Agar hammasi to‘g‘ri bo‘lsa:
             setImage(file);
             const url = URL.createObjectURL(file);
             setPreviewImage(url);
         }
     };
+
 
     useEffect(() => {
         getCategory();
