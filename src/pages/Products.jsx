@@ -61,7 +61,7 @@ export const Products = () => {
                 return;
             }
 
-            const maxSizeInMB = 10;
+            const maxSizeInMB = 5;
             const maxSizeInBytes = maxSizeInMB * 1024 * 1024;
 
             if (file.size > maxSizeInBytes) {
