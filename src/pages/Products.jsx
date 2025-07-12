@@ -49,7 +49,7 @@ export const Products = () => {
 
     const handleInputChange = (e) => {
         const target = e.target;
-        const { name, value, type, files } = target;
+        const {name, value, type, files} = target;
 
         if (type === 'file' && files) {
             const file = files[0];

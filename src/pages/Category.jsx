@@ -117,7 +117,6 @@ export const Category = () => {
                 return;
             }
 
-            // Agar hammasi to‘g‘ri bo‘lsa:
             setImage(file);
             const url = URL.createObjectURL(file);
             setPreviewImage(url);
