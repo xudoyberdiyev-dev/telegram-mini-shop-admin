@@ -3,7 +3,7 @@
 import {useState, useEffect} from "react";
 import axios from "axios";
 import {APP_API} from "../api/AppApi.js";
-import {BASE_URL} from "../api/BaseUrl.js";
+import {BASE_IMAGE_URL, BASE_URL} from "../api/BaseUrl.js";
 import {Loading} from "../connection/Loading.jsx";
 import {Image} from "lucide-react";
 
@@ -48,37 +48,36 @@ export const Products = () => {
     };
 
     const handleInputChange = (e) => {
-        const target = e.target;
-        const {name, value, type, files} = target;
+        const { name, value, type, files } = e.target;
 
-        if (type === 'file' && files) {
+        if (type === 'file' && files && files.length > 0) {
             const file = files[0];
             const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 
             if (!allowedTypes.includes(file.type)) {
-                alert("Format noto‘g‘ri! Faqat .jpg, .jpeg, .png va .webp fayllar yuklanadi.");
-                target.value = null;
+                alert("❌ Format noto‘g‘ri! Faqat .jpg, .jpeg, .png va .webp fayllar yuklanadi.");
+                e.target.value = null;
                 return;
             }
 
-            const maxSizeInMB = 10;
-            const maxSizeInBytes = maxSizeInMB * 1024 * 1024;
+            const maxSizeMB = 10;
+            const maxSizeBytes = maxSizeMB * 1024 * 1024;
 
-            if (file.size > maxSizeInBytes) {
-                alert(`Fayl hajmi ${maxSizeInMB}MB dan oshmasligi kerak!`);
-                target.value = null;
+            if (file.size > maxSizeBytes) {
+                alert(`❌ Fayl hajmi ${maxSizeMB}MB dan oshmasligi kerak!`);
+                e.target.value = null;
                 return;
             }
 
-            setFormData({
-                ...formData,
+            setFormData(prev => ({
+                ...prev,
                 [name]: file
-            });
+            }));
         } else {
-            setFormData({
-                ...formData,
+            setFormData(prev => ({
+                ...prev,
                 [name]: value
-            });
+            }));
         }
     };
 
@@ -195,7 +194,7 @@ export const Products = () => {
                                     <td className="p-3 border-b">
                                         <div className="w-16 h-12 rounded overflow-hidden border">
                                             <img
-                                                src={product.image}
+                                                src={`${BASE_IMAGE_URL}/${product.image}`}
                                                 alt={product.name}
                                                 width={64}
                                                 height={48}

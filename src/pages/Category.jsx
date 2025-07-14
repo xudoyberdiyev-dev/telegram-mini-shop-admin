@@ -2,7 +2,7 @@
 
 import {useState, useEffect} from 'react';
 import axios from 'axios';
-import {BASE_URL} from "../api/BaseUrl.js";
+import {BASE_IMAGE_URL, BASE_URL} from "../api/BaseUrl.js";
 import {APP_API} from "../api/AppApi.js";
 import {Loading} from "../connection/Loading.jsx";
 
@@ -22,6 +22,7 @@ export const Category = () => {
             setLoading(true);
             const res = await axios.get(`${BASE_URL}${APP_API.category}`);
             setCategories(res.data);
+            console.log(res.data);
         } catch (err) {
             console.log(err);
         } finally {
@@ -94,35 +95,28 @@ export const Category = () => {
     };
 
     const handleFileChange = (e) => {
-        if (e.target.files && e.target.files[0]) {
-            const file = e.target.files[0];
-            const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+        const file = e.target.files?.[0];
+        if (!file) return;
 
-            if (!allowedTypes.includes(file.type)) {
-                alert("Format noto‘g‘ri! Faqat .jpg, .jpeg, .png va .webp fayllar yuklanadi.");
-                e.target.value = null;
-                setImage(null);
-                setPreviewImage(null);
-                return;
-            }
+        console.log("FILE TYPE:", file.type, "SIZE:", file.size);
 
-            const maxSizeInMB = 10;
-            const maxSizeInBytes = maxSizeInMB * 1024 * 1024;
+        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+        const maxSizeInMB = 10;
+        const maxSizeInBytes = maxSizeInMB * 1024 * 1024;
 
-            if (file.size > maxSizeInBytes) {
-                alert(`Rasm hajmi ${maxSizeInMB}MB dan oshmasligi kerak!`);
-                e.target.value = null;
-                setImage(null);
-                setPreviewImage(null);
-                return;
-            }
-
-            setImage(file);
-            const url = URL.createObjectURL(file);
-            setPreviewImage(url);
+        if (!allowedTypes.includes(file.type)) {
+            alert("Noto‘g‘ri format. Faqat .jpg, .jpeg, .png, .webp!");
+            return;
         }
-    };
 
+        if (file.size > maxSizeInBytes) {
+            alert(`Rasm hajmi ${maxSizeInMB}MB dan oshmasligi kerak!`);
+            return;
+        }
+
+        setImage(file);
+        setPreviewImage(URL.createObjectURL(file));
+    };
 
     useEffect(() => {
         getCategory();
@@ -227,7 +221,11 @@ export const Category = () => {
                             <td className="p-3">{idx + 1}</td>
                             <td className="p-3">
                                 <div className="w-16 h-12 overflow-hidden border rounded">
-                                    <img src={cat.image} alt="img" className="w-full h-full object-cover"/>
+                                    <img
+                                        src={`${BASE_IMAGE_URL}/${cat.image}`}
+                                        alt="img"
+                                        className="w-full h-full object-cover"
+                                    />
                                 </div>
                             </td>
                             <td className="p-3">{cat.name}</td>
