@@ -48,7 +48,6 @@ export const Category = () => {
             } else {
                 await axios.post(`${BASE_URL}${APP_API.category}`, formData);
             }
-
             setName('');
             setImage(null);
             setEditMode(false);
@@ -72,16 +71,17 @@ export const Category = () => {
             await axios.delete(`${BASE_URL}${APP_API.category}/${id}`);
             getCategory();
         } catch (err) {
-            const msg = axios.isAxiosError(err) ? err.response?.data?.msg : 'Xatolik yuz berdi';
+            const msg = axios.isAxiosError(err) ? err.response?.data?.error : 'Xatolik yuz berdi';
             alert(msg);
         }
     };
+
 
     const editCategory = (cat) => {
         setEditMode(true);
         setEditId(cat._id);
         setName(cat.name);
-        setPreviewImage(cat.image);
+        setPreviewImage(`${BASE_IMAGE_URL}/${cat.image}`);
         setShowForm(true);
     };
 
