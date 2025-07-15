@@ -63,7 +63,6 @@ export const Category = () => {
         }
     };
 
-
     const deleteCategory = async (id) => {
         const confirmDelete = window.confirm("Rostdan ham o‘chirmoqchimisiz?");
         if (!confirmDelete) return;
@@ -75,8 +74,7 @@ export const Category = () => {
             alert(msg);
         }
     };
-
-
+    
     const editCategory = (cat) => {
         setEditMode(true);
         setEditId(cat._id);
