@@ -74,7 +74,7 @@ export const Category = () => {
             alert(msg);
         }
     };
-    
+
     const editCategory = (cat) => {
         setEditMode(true);
         setEditId(cat._id);
