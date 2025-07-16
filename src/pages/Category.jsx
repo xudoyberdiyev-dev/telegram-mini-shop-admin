@@ -21,7 +21,7 @@ export const Category = () => {
         try {
             setLoading(true);
             const res = await axios.get(`${BASE_URL}${APP_API.category}`);
-            setCategories(res.data);
+            setCategories(res.data.reverse());
             console.log(res.data);
         } catch (err) {
             console.log(err);
